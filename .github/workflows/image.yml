@@ -1,4 +1,4 @@
-name: Build-RYSEN
+name: Build-PBX-DMR-Engine
 
 on:
   push:
