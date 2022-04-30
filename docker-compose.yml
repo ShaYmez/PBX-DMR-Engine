@@ -1,0 +1,100 @@
+# PBX-DMR Engine
+
+
+version: '2.4'
+services:
+# Example code for multiple docker containers per instance for PBX-DMR (FreeSTAR)
+
+    pbx-dmr-bridge1:
+        container_name: dmr-bridge1
+        ports:
+            - '62000:62000/udp'  # Local DMR Port
+            #- '3332:2222/udp'    # PCM Port
+        image: 'shaymez/pbx-dmr-engine:latest'
+        hostname: DMR-BRIDGE1
+        volumes:
+          - /var/log/dmr-bridge1:/var/log/dmr-bridge1
+        environment:
+          - CALLSIGN=M0VUB
+          - DMR_ID=234587501
+          - DMR_MASTER_HOST=dmr.freestar.network
+          - DMR_MASTER_PORT=62031
+          - DMR_MASTER_PASSWORD=passw0rd
+          - DMR_MASTER_OPTIONS="TS2=23426;SINGLE=1;VOICE=0;"
+          - DMR_LOCAL_PORT=62000
+          - ANALOG_DMR_ID=2345875
+          - ANALOG_RPT_ID=234587505
+          - ANALOG_DMR_TG=23426
+          - ANALOG_DMR_TS=2
+          - USRP_PORT_RX=30001
+          - USRP_PORT_TX=30002
+          - USRP_PARTNER=172.16.236.1
+        networks:
+           bridge_net:
+             ipv4_address: 172.16.236.30
+
+    pbx-dmr-bridge2:
+        container_name: dmr-bridge2
+        ports:
+            - '62001:62001/udp'  # Local DMR Port
+            #- '3333:2222/udp'    # PCM Port
+        image: 'shaymez/pbx-dmr-engine:latest'
+        hostname: DMR-BRIDGE2
+        volumes:
+          - /var/log/dmr-bridge2:/var/log/dmr-bridge2
+        environment:
+          - CALLSIGN=M0VUB
+          - DMR_ID=234587502
+          - DMR_MASTER_HOST=dmr.freestar.network
+          - DMR_MASTER_PORT=62031
+          - DMR_MASTER_PASSWORD=passw0rd
+          - DMR_MASTER_OPTIONS="TS2=23427;SINGLE=1;VOICE=0;"
+          - DMR_LOCAL_PORT=62001
+          - ANALOG_DMR_ID=2345875
+          - ANALOG_RPT_ID=234587506
+          - ANALOG_DMR_TG=23427
+          - ANALOG_DMR_TS=2
+          - USRP_PORT_RX=30011
+          - USRP_PORT_TX=30012
+          - USRP_PARTNER=172.16.236.1
+        networks:
+           bridge_net:
+             ipv4_address: 172.16.236.40
+
+    pbx-dmr-bridge3:
+        container_name: dmr-bridge3
+        ports:
+            - '62003:62003/udp'  # Local DMR Port
+            #- '3333:2222/udp'    # PCM Port
+        image: 'shaymez/pbx-dmr-engine:latest'
+        hostname: DMR-BRIDGE3
+        volumes:
+          - /var/log/dmr-bridge3:/var/log/dmr-bridge3
+        environment:
+          - CALLSIGN=M0VUB
+          - DMR_ID=234587503
+          - DMR_MASTER_HOST=dmr.freestar.network
+          - DMR_MASTER_PORT=62031
+          - DMR_MASTER_PASSWORD=passw0rd
+          - DMR_MASTER_OPTIONS="TS2=23428;SINGLE=1;VOICE=0;"
+          - DMR_LOCAL_PORT=62003
+          - ANALOG_DMR_ID=505000
+          - ANALOG_RPT_ID=234587507
+          - ANALOG_DMR_TG=23427
+          - ANALOG_DMR_TS=2
+          - USRP_PORT_RX=30021
+          - USRP_PORT_TX=30022
+          - USRP_PARTNER=172.16.236.1
+        networks:
+           bridge_net:
+             ipv4_address: 172.16.236.50
+
+networks:
+    bridge_net:
+        driver: bridge
+        ipam:
+           driver: default
+           config:
+           - subnet: "172.16.236.0/24"
+             gateway: "172.16.236.1"
+

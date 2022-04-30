@@ -1,0 +1,32 @@
+#!/bin/bash
+set -x
+
+[ -d /opt/bridge ] || mkdir /opt/bridge
+[ -d /var/log/bridge ] || mkdir /var/log/bridge
+
+HOSTIP=$(ip route show | awk '/default/ {print $3}')
+
+
+envsubst < /etc/MMDVM_Bridge.template  > /opt/MMDVM_Bridge/MMDVM_Bridge.ini
+envsubst < /etc/DVSwitch.template > /opt/MMDVM_Bridge/DVSwitch.ini
+envsubst < /etc/Analog_Bridge.template > /opt/Analog_Bridge/Analog_Bridge.ini
+
+cd /opt/bridge
+
+export AnalogBridgeLogDir=/var/log/bridge
+
+#/opt/bridge/dvswitch.sh mode DMR
+
+echo Starting MD379 Emu
+qemu-arm /usr/bin/md380-emu -S 2470 &
+
+echo Starting MMDVM ... 
+cd /opt/MMDVM_Bridge
+./MMDVM_Bridge /opt/MMDVM_Bridge/MMDVM_Bridge.ini  &
+
+
+
+echo Starting Analog Bridge
+cd /opt/Analog_Bridge
+exec ./Analog_Bridge /opt/Analog_Bridge/Analog_Bridge.ini  
+

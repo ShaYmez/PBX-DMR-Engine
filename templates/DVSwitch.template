@@ -1,0 +1,20 @@
+; DVSwitch.ini For MMDVM_Bridge PBX-DMR-Engine
+; DMR<->USRP Docker Container
+; 2022, Jared Quinn VK2WAY
+
+[DMR]
+address = 127.0.0.1             ; Address to send AMBE TLV frames to (export)
+txPort = 31100                  ; Port to send AMBE TLV frames to (export)
+rxPort = 31103                  ; Port to listen on (import)
+slot = 2                        ; Export slot
+exportTG = 969                  ; Which TG to export 
+hangTimerInFrames = 0		; Use 50 for 3 seconds of hang time (3000 / 60) 
+talkerAlias = %callsign %location %description ; Get callsign location and description from MMDVM_Bridge.ini
+
+[ASL]
+address = 127.0.0.1
+txPort = 30100
+rxPort = 30103
+
+
+
