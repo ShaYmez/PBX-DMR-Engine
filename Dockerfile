@@ -2,9 +2,9 @@ FROM ubuntu:latest
 
 RUN apt-get update && apt-get install -y curl wget build-essential git gcc-arm-linux-gnueabihf unzip libc6-armel-cross libc6-dev-armel-cross binutils-arm-linux-gnueabi libncurses5-dev bison flex libssl-dev bc 
 
-RUN apt-get install -y python
+RUN apt-get install -y python3.9
 
-RUN cd /usr/src && git clone https://github.com/DVSwitch/md380tools.git && cd md380tools/emulator && make clean all
+RUN cd /usr/src && git clone https://github.com/ShaYmez/md380tools.git && cd md380tools/emulator && make clean all
 
 
 ## Build PBX DMR Engine
@@ -26,7 +26,7 @@ COPY templates/DVSwitch.template /etc/DVSwitch.template
 COPY templates/Analog_Bridge.template /etc/Analog_Bridge.template
 
 RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y binfmt-support qemu-user
-RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y iproute2 python3
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y iproute2 python3.9
 
 RUN cp /usr/local/Analog_Bridge/parrot.sh /opt/bridge
 RUN cp /usr/local/Analog_Bridge/dvsm.macro /opt/bridge
