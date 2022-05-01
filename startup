@@ -17,7 +17,7 @@ export AnalogBridgeLogDir=/var/log/bridge
 
 #/opt/bridge/dvswitch.sh mode DMR
 
-echo Starting MD379 Emu
+echo Starting MD380 Emu
 qemu-arm /usr/bin/md380-emu -S 2470 &
 
 echo Starting MMDVM ... 
