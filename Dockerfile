@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 RUN apt-get update && apt-get install -y curl wget build-essential git gcc-arm-linux-gnueabihf unzip libc6-armel-cross libc6-dev-armel-cross binutils-arm-linux-gnueabi libncurses5-dev bison flex libssl-dev bc 
 
-RUN apt-get install -y python3.9
+RUN apt-get install -y python2
 
 RUN cd /usr/src && git clone https://github.com/ShaYmez/md380tools.git && cd md380tools/emulator && make clean all
 
@@ -11,7 +11,7 @@ RUN cd /usr/src && git clone https://github.com/ShaYmez/md380tools.git && cd md3
 FROM ubuntu:latest 
 COPY --from=0 /usr/src/md380tools/emulator/md380-emu /usr/bin
 
-RUN apt-get update && apt-get install -y wget git curl unzip gettext-base libsndfile1 libasound2
+RUN apt-get update && apt-get install -y wget git curl unzip gettext-base libsndfile1 libasound2 python2
 
 RUN [ -d /usr/local ] || mkdir -p /usr/local
 RUN [ -d /opt/bridge ] || mkdir -p /opt/bridge
