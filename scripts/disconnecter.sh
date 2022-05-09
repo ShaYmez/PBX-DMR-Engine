@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# IPSC2 Only
+
 if [[ $(/opt/MMDVM_Bridge/dvswitch.sh mode) = "DMR" ]];  then
 	echo DMR Mode
 	/opt/MMDVM_Bridge/dvswitch.sh tune 400
